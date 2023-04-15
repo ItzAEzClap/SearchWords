@@ -20,6 +20,6 @@ window.addEventListener('DOMContentLoaded', () => {
     let test = window.open("", "", `top = ${window.innerHeight}, left = ${window.innerWidth},width = 1, height = 1`)
     if (!test || test.closed || typeof test.closed == "undefined") {
         blockedPopups = true
-        alert("Allow popus for this to owrk.")
+        alert("Allow popus for this to work.")
     } else { test.close() }
 })
