@@ -4,13 +4,11 @@ let blockedPopups = false
 
 async function main() {
     if (blockedPopups) { return }
-    const searchWords = []
+
     for (let i = 0; i < amount.value; i++) {
-        searchWords.push(words[Math.floor(Math.random() * words.length)])
-    }
-    await Promise.all(searchWords.map(async q =>  {
-        let newWindow = window.open(`http://www.bing.com/search?q=` + encodeURIComponent(q))
-    }))
+        let word = words[Math.floor(Math.random() * words.length)]
+        let newWindow = window.open(`http://www.bing.com/search?q=` + encodeURIComponent(word))
+        await new Promise(resolve => setTimeout(resolve, 100))
 }
 
 amount.addEventListener('input', () => amount.value = amount.value > 100 ? 100 : amount.value)
