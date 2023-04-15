@@ -9,6 +9,7 @@ async function main() {
         let word = words[Math.floor(Math.random() * words.length)]
         let newWindow = window.open(`http://www.bing.com/search?q=` + encodeURIComponent(word))
         await new Promise(resolve => setTimeout(resolve, delay))
+        newWindow.close()
     }
 }
 
