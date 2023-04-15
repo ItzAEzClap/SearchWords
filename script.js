@@ -8,7 +8,7 @@ async function main() {
     for (let i = 0; i < amount.value; i++) {
         let word = words[Math.floor(Math.random() * words.length)]
         let newWindow = window.open(`http://www.bing.com/search?q=` + encodeURIComponent(word))
-        await new Promise(resolve => setTimeout(resolve, 100))
+        await new Promise(resolve => setTimeout(resolve, delay))
 }
 
 amount.addEventListener('input', () => amount.value = amount.value > 100 ? 100 : amount.value)
