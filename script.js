@@ -9,7 +9,7 @@ async function main() {
         searchWords.push(words[Math.floor(Math.random() * words.length)])
     }
     await Promise.all(searchWords.map(async q =>  {
-        let newWindow = window.open(`http://www.google.com/search?q=${q}`)
+        let newWindow = window.open(`http://www.google.com/search?q=` + encodeURIComponent(q))
     }))
 }
 
