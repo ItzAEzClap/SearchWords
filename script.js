@@ -1,5 +1,5 @@
 const amount = document.getElementById('amount')
-const delay = 100
+const delay = document.getElementById('delay')
 let blockedPopups = false
 
 async function main() {
@@ -8,7 +8,7 @@ async function main() {
     for (let i = 0; i < amount.value; i++) {
         let word = words[Math.floor(Math.random() * words.length)]
         let newWindow = window.open(`http://www.bing.com/search?q=` + encodeURIComponent(word))
-        await new Promise(resolve => setTimeout(resolve, delay))
+        await new Promise(resolve => setTimeout(resolve, delay.value))
         newWindow.close()
     }
 }
