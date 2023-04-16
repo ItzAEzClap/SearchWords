@@ -4,12 +4,27 @@ let blockedPopups = false
 
 async function main() {
     if (blockedPopups) { return }
-
+    let searches = []
     for (let i = 0; i < amount.value; i++) {
-        let word = words[Math.floor(Math.random() * words.length)]
-        let newWindow = window.open(`http://www.bing.com/search?q=` + encodeURIComponent(word))
-        if (delay.value > 0) { await new Promise(resolve => setTimeout(resolve, delay.value)) }
-        newWindow.close()
+        searches.push(words[Math.floor(Math.random() * words.length)])
+    }
+
+    // Split Searches Into Group Of 10 For Less Errors
+    let length = searches.length / 10
+    for (let _ = 0; _ < length; _++) {
+        let group = searches.splice(0, 10)
+        let popups = []
+        await Promise.all(group.map(async (q, i) => {
+            let url = `http://www.bing.com/search?q=` + encodeURIComponent(q)
+            let x = (100 * i) % window.innerWidth; if (x < 100) { x = 0 }
+            let y = Math.floor((100 * i) / window.innerWidth) * 100
+
+            let newPopup = window.open(url, "_blank", `width=100,height=100,top=${y},left=${x}`)
+            popups.push(newPopup)
+            await new Promise(resolve => setTimeout(resolve, delay.value))
+            newPopup.close()
+        }))
+        for (const popup of popups) { popup.close() }
     }
 }
 
@@ -17,9 +32,9 @@ amount.addEventListener('input', () => amount.value = amount.value > 100 ? 100 :
 
 window.addEventListener('DOMContentLoaded', () => {
     // Test Popup
-    let test = window.open("", "", `top = ${window.innerHeight}, left = ${window.innerWidth},width = 1, height = 1`)
-    if (!test || test.closed || typeof test.closed == "undefined") {
+    let testPopups = window.open("", "", `top = ${window.innerHeight}, left = ${window.innerWidth},width = 1, height = 1`)
+    if (!testPopups || testPopups.closed || typeof testPopups.closed == "undefined") {
         blockedPopups = true
         alert("Allow popus for this to work.")
-    } else { test.close() }
+    } else { testPopups.close() }
 })
