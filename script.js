@@ -1,9 +1,8 @@
 const amount = document.getElementById('amount')
 const delay = document.getElementById('delay')
-let blockedPopups = false
 
 async function main() {
-    if (blockedPopups) { return }
+    if (!testPopups()) { return }
     let searches = []
     for (let i = 0; i < amount.value; i++) {
         searches.push(words[Math.floor(Math.random() * words.length)])
@@ -28,13 +27,13 @@ async function main() {
     }
 }
 
-amount.addEventListener('input', () => amount.value = amount.value > 100 ? 100 : amount.value)
-
-window.addEventListener('DOMContentLoaded', () => {
-    // Test Popup
-    let testPopups = window.open("", "", `top = ${window.innerHeight}, left = ${window.innerWidth},width = 1, height = 1`)
+function testPopups() {
+    let testPopups = window.open("", "", `top = ${window.innerHeight}, left = ${window.innerWidth}, width = 1, height = 1`)
     if (!testPopups || testPopups.closed || typeof testPopups.closed == "undefined") {
-        blockedPopups = true
         alert("Allow popus for this to work.")
-    } else { testPopups.close() }
-})
+        return false
+    } else { testPopups.close(); return true }
+}
+
+amount.addEventListener('input', () => amount.value = amount.value > 100 ? 100 : amount.value)
+window.addEventListener('DOMContentLoaded', testPopups)
