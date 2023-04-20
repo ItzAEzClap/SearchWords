@@ -1,8 +1,9 @@
 const amount = document.getElementById('amount')
 const delay = document.getElementById('delay')
+let blockedPopups = false
 
 async function main() {
-    if (!testPopups()) { return }
+    if (blockedPopups && !testPopups()) { return }
     let searches = []
     for (let i = 0; i < amount.value; i++) {
         searches.push(words[Math.floor(Math.random() * words.length)])
@@ -30,6 +31,7 @@ async function main() {
 function testPopups() {
     let testPopups = window.open("", "", `top = ${window.innerHeight}, left = ${window.innerWidth}, width = 1, height = 1`)
     if (!testPopups || testPopups.closed || typeof testPopups.closed == "undefined") {
+        blockedPopups = true
         alert("Allow popus for this to work.")
         return false
     } else { testPopups.close(); return true }
