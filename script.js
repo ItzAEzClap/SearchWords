@@ -1,7 +1,13 @@
 const amount = document.getElementById('amount')
 const delay = document.getElementById('delay')
 let blockedPopups = false
-
+`
+let u = new URL(location)
+let params = u.searchParams
+params.get("delay")
+params.get("searches")
+CHeck if valid
+`  
 async function main() {
     if (blockedPopups && !testPopups()) { return }
     let searches = []
