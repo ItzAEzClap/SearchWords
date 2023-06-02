@@ -1,13 +1,7 @@
 const amount = document.getElementById('amount')
 const delay = document.getElementById('delay')
 let blockedPopups = false
-`
-let u = new URL(location)
-let params = u.searchParams
-params.get("delay")
-params.get("searches")
-CHeck if valid
-`  
+
 async function main() {
     if (blockedPopups && !testPopups()) { return }
     let searches = []
@@ -45,3 +39,14 @@ function testPopups() {
 
 amount.addEventListener('input', () => amount.value = amount.value > 100 ? 100 : amount.value)
 window.addEventListener('DOMContentLoaded', testPopups)
+
+
+window.addEventListener('load', () => {
+    let url = new URL(location)
+    let params = url.searchParams
+    let timeDelay = params.get("delay")
+    let amountOfSearches = params.get("searches")
+    if (timeDelay) { delay.value = timeDelay }
+    if (amountOfSearches) { amount.value = Math.min(amountOfSearches, 100) }
+    document.getElementById('search').click()
+})
