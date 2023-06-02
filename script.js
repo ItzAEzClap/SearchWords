@@ -3,7 +3,7 @@ const delay = document.getElementById('delay')
 let blockedPopups = true
 
 async function main() {
-    if (blockedPopups) { return }
+    if (blockedPopups) { return false }
     let searches = []
     for (let i = 0; i < amount.value; i++) {
         searches.push(words[Math.floor(Math.random() * words.length)])
@@ -23,6 +23,7 @@ async function main() {
             newPopup.close()
         }))
     }
+    return true
 }
 
 function testPopups() {
