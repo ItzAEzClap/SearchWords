@@ -13,18 +13,15 @@ async function main() {
     let length = searches.length / 10
     for (let _ = 0; _ < length; _++) {
         let group = searches.splice(0, 10)
-        let popups = []
         await Promise.all(group.map(async (q, i) => {
             let url = `http://www.bing.com/search?q=` + encodeURIComponent(q)
             let x = (100 * i) % window.innerWidth; if (x < 100) { x = 0 }
             let y = Math.floor((100 * i) / window.innerWidth) * 100
 
             let newPopup = window.open(url, "_blank", `width=100,height=100,top=${y},left=${x}`)
-            popups.push(newPopup)
             await new Promise(resolve => setTimeout(resolve, delay.value))
             newPopup.close()
         }))
-        for (const popup of popups) { popup.close() }
     }
 }
 
