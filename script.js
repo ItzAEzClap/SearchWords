@@ -39,9 +39,6 @@ window.addEventListener('DOMContentLoaded', testPopups)
 
 
 window.addEventListener('load', () => {
-    if (!testPopups()) { alert("Allow popus for this to work."); return }
-    else { blockedPopups = false }
-
     let url = new URL(location)
     let params = url.searchParams
     let timeDelay = params.get("delay")
@@ -49,4 +46,7 @@ window.addEventListener('load', () => {
     if (timeDelay) { delay.value = timeDelay }
     if (amountOfSearches) { amount.value = Math.min(amountOfSearches, 100) }
     document.getElementById('search').click()
+    
+    if (!timeDelay && !amountOfSearches && !testPopups()) { alert("Allow popus for this to work.") }
+    else { blockedPopups = false }
 })
